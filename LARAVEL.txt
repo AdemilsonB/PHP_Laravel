@@ -1,0 +1,181 @@
+CURSO LARAVEL - Site de Eventos 
+
+29/01
+	um framework construida em PHP
+	utiliza a arquitetura MVC (Model View Controller);
+	recursos que auxiliam no desenvolvimeto de aplicações: artisan, migrations, blade e 	etc...
+	flexibilidade para desenvolvimento de aplicações
+	A estrutura de pastas é simples, deixando o projeto organizado
+
+	instalação php 8.2
+	instalação do composer 
+
+	criar pasta e rodar o comando:
+	composer create-project --prefer-dist laravel/laravel nameProjetct
+
+30/01
+	habilitar comandos no php.ini
+	descomentar extensões
+	rodar 'php artisan key:generate' no terminal para funcionar as rotas
+	na pasta rodar comando:
+	php artisan serve
+
+	-configuração de rotas
+
+	-conhecendo blade
+	Blade é a template engine do Laravel;
+	Com ele, vamos deixar as nossas views dinâminacas;
+	Inserindo tags do HTML e também dados que são fornecidos pelo banco;
+	Podemos dizer que as Views serão responsabilidade do Blade;
+
+	Podemos criar estruturas de repetição no Blade;
+	Execurtar PHP puro;
+	Escrever comentários nos arquivos view;
+	O Blade realemtno é muito versátil e nos permite chegar num resultado exce-
+	lente de renderização de views;
+
+31/01
+	adicionando arquivos estáticos 
+		Uma aplicação wev contém CSS, JS e imagens
+		O laravel proporciona um maneira facil estes arquivos 
+
+	Layout com Blade
+		A funcionalidade de criar um layout permite o reaproveitamento de código;
+		Podemos utilizar o mesmo header e footer em todas as páginas sem repetir 		código;
+		Mas o layout do Blade naõ se limita a isso, podemos criar seções do site por
+		meio do layout e também mudar o title da página;
+
+	Parâmetros nas rotas
+		Podemos mudar como uma view nos responde adicionando parâmetros a uma 		rota;
+		Ao definir a rota devemos oclocar o parâmetro desta maneira: {id};
+		Podemos ter parâmetros opcionais também, adicionando uma ?;
+		O Laravel aceita também query parameters, utilizando a seguinte sintaxe: 
+			?nome=Matheus&idade=29
+
+01/02
+Controllers
+	Os Controller são parte fundamental de toda aplicação em Laravel;
+	Geralmente condensam a maior parte da lógica;
+	Tem o papel de enviar e esperar resposta do banco de dados;
+	E também receber e enviar alguma respossta para as views;
+	Os Controllers podem ser criados via artisan;
+	É comum retornar uma view ou redirecionar para uma URL pelo Controller;
+
+	ion icons
+		<script type="module" src="https://unpkg.com/ionicons@					5.5.2/dist/ionicons/ionicons.esm.js"></script>
+
+Conexão com o banco 
+	A conexão do Laravel com o banco é configurada pelo arquivo .env;
+	Isso nos proporciona maior liberdade e também segunrança na aplicação;
+	O Laravel utiliza ORM (Object-Relational Mapping) chamada Eloquent;
+	E também para a criação de tabelas as migrations;
+
+Migrations 
+	As migrations funcionam como um versionamento de banco de dados;
+	Podemos avançar e retroceder a qualquer momento;
+	Adicionar colunas e remover de forma facilitada;
+	Fazer o setup de DB de uma nova instalação em apenas um comando;
+	Podemos verificarr as migrations com migrate:status
+	Criar migration php artisan make:migration nameTabela
+	Atualizar modificações na estrutura do arquivo php artisan migrate:fresh
+
+Avançando em Migrations
+	Quando precisamos adicionar um novo campo a uma tabela, devemos criar uma nova
+	migration;
+	Porém devemos tomar cuidado para não rodar o comando fresh, e apagar os dados
+	já existentes;
+	O comando rollback pode ser utilizado para voltar uma migration;
+	Para voltar todas podemos utilizar o reset;
+	Para voltar todas e rodar o migrate novamete utilizamos o refresh;
+
+02/02
+Eloquent 
+	Eloquent é a ORM (Object Relational Mapper) do Laravel;
+	Cada tabela tem um Model que é responsável pela interação entre as requisições ao 	banco;
+	A convenção para o Model é o nome da entidade em singular, enquanto a tabela é a 	entidade no plural: Event e events;
+	No model faremos poucas alterações dos arquivos, geralmente configurações 	específicas;
+
+Adicionando registro ao banco
+	No Laravel é comum ter uma action específica para o post chamada de store;
+	Lá vamos criar o objeto e compor ele com base nos dados enviados pelo POST;
+	Com o objeto formado utilizamos o método save para persistir os dados;
+
+05/02
+Salvando imagem no Laravel 
+	Para fazer o upload de imagens precisamos mudar o enctype do forme e também criar 	um input de envio das mesmas;
+	No Controller vamos fazer um tratamento de verificação da imagem que foi enviada;
+	E depois vamos salvar ela com um nome único em um diretório do projeto;
+	No banco savamos apenas o path para a imagem;
+
+Resgatando um registro 
+	Vamos fazer a view do evento nesta aula;
+	E com isso aprender resgatar apenas um registro prlo Eloquent;
+	Vamos utiilizar o método findOrFail;
+	E também criar uma nova view e rota para esta função;
+	Esta tela tem a função de exibir todas as informações do evento e também o botão de 	participar;
+
+06/02
+Salvando JSON 
+	Podemos salvar um conjunto de dados no banco para itens de múltipla escolha;
+	Vamos criar um campo determinado de json via migrations;
+	No front-end podemos utilizar inputs com checkbox;
+	Após o envio para Controller, apenas recebemos do request os itens e o resto do 	processo é igual ao dos outros dados do nosso Model;
+
+Salvando Datas
+	Para salvar datas no Laravel é muito fácil, precisamos crir um input do tipo date na 	nossa view;
+	Um campo de dateTime via migrations;
+	E processar o envio dos dados via Controller pelo request do POST;
+
+Busca no Laravel
+	Para criar uma busca no Laravel é muito simples, vamos utilizar o Eloquent;
+	O método where vai identificar os registros que precisamos, fazendo um filtro e nos 	enviando para a view;
+	Podemos fazer a exibição da busca na própria Home, mudando o layout com 	diretivas do Blade;
+
+Autenticação no Laravel
+	Podemos utilizar o Jetstream para aplicar uma autenticação de modo rápido no nosso 	sistem;
+	Primeiramente instalamos o pacote via Composer;
+	Depois instalamos o Livewire, que são componentes de autenticaçao para o Blade;
+	E por fim rodamos as migrations;
+
+07/02
+Relations (one to many)
+	Relação são essenciais para sistemas de banco de dados relacionais;
+	Vamos criar uma relação de um para muitos, entre usuário e eventos;
+	Isso tornará um usuário dono de um evento, e também a possibilidade dele possuir 	vários;
+	Precisaremos alterar as migrations, adicionando uma chave estrangeira no model 	Event;
+
+08/02
+Criando uma dashboard
+	Agora que um usuário está ligado a um evento podemos criar uma dashboard;
+	Ela vai informar todos os eventos que o usuário possuí;
+	Futuramente também vamos adicionar as ações de edição e de deletar evento nesta 	view;
+
+04/03
+Relations (many to many)
+	Vamos aprender uma nova realação de registro pelo laravel: a many to many;
+	Vamos aplicar esta lógica a participação de eventos, onde um usuário pode ter vários eventos e um evento vários participantes;
+	Precisaremos criar uma nova tabela que administra estas relações, seguindo também a convenção do Laravel;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
